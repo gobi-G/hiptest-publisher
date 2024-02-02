@@ -43,7 +43,7 @@ module Hiptest
       begin
         ParseConfig.new(cli_options.config) if present?(cli_options.config)
       rescue Errno::EACCES => err
-        raise CliOptionError, I18n.t('errors.cli_options.missing_config_file', config_file: cli_options.config)
+        raise CliOptionError, 'errors.cli_options.missing_config_file'
       end
     end
 
@@ -59,11 +59,11 @@ module Hiptest
       return if filters.empty?
 
       if filters.size > 1
-        raise CliOptionError, I18n.t('errors.cli_options.multiple_filters')
+        raise CliOptionError, 'errors.cli_options.multiple_filters'
       end
 
       if present?(cli_options.test_run_id) || present?(cli_options.test_run_name)
-        raise CliOptionError, I18n.t('errors.cli_options.filter_with_test_run')
+        raise CliOptionError, 'errors.cli_options.filter_with_test_run'
       end
 
       check_numeric_list(:filter_on_scenario_ids)
@@ -75,18 +75,18 @@ module Hiptest
       return if absent?(cli_options.filter_on_status)
 
       if absent?(cli_options.test_run_id) && absent?(cli_options.test_run_name)
-          raise CliOptionError, I18n.t('errors.cli_options.filter_status_without_test_run')
+          raise CliOptionError, 'errors.cli_options.filter_status_without_test_run'
       end
     end
 
     def check_secret_token
       if absent?(cli_options.xml_file)
         if absent?(cli_options.token)
-          raise CliOptionError, I18n.t('errors.cli_options.missing_token')
+          raise CliOptionError, 'errors.cli_options.missing_token'
         end
 
         unless numeric?(cli_options.token)
-          raise CliOptionError, I18n.t('errors.cli_options.invalid_token', token: cli_options.token)
+          raise CliOptionError, 'errors.cli_options.invalid_token'
         end
       end
     end
@@ -97,12 +97,12 @@ module Hiptest
         globbed_files = Dir.glob(agnostic_path)
 
         if globbed_files.length == 0
-          raise CliOptionError, I18n.t('errors.cli_options.unreadable_report_file', path: cli_options.push)
+          raise CliOptionError, 'errors.cli_options.unreadable_report_file'
         elsif globbed_files.length == 1 && globbed_files == [cli_options.push]
           if !File.readable?(agnostic_path)
-            raise CliOptionError, I18n.t('errors.cli_options.unreadable_report_file', path: cli_options.push)
+            raise CliOptionError, 'errors.cli_options.unreadable_report_file'
           elsif !File.file?(agnostic_path)
-            raise CliOptionError, I18n.t('errors.cli_options.irregular_report_file', path: cli_options.push)
+            raise CliOptionError, 'errors.cli_options.irregular_report_file'
           end
         end
       end
@@ -111,7 +111,7 @@ module Hiptest
     def check_execution_environment
       if cli_options.execution_environment
         if cli_options.execution_environment.length > 255
-          raise CliOptionError, I18n.t('errors.cli_options.invalid_execution_environment')
+          raise CliOptionError, 'errors.cli_options.invalid_execution_environment'
         end
       end
     end
@@ -122,12 +122,12 @@ module Hiptest
       parent = first_existing_parent(output_directory)
       if !parent.writable?
         if parent.realpath === Pathname.new(cli_options.output_directory).cleanpath
-          raise CliOptionError, I18n.t('errors.cli_options.output_directory_not_writable', output_dir: cli_options.output_directory)
+          raise CliOptionError, 'errors.cli_options.output_directory_not_writable'
         else
-          raise CliOptionError, I18n.t('errors.cli_options.output_directory_parent_not_writable', realpath: parent.realpath, output_dir: cli_options.output_directory)
+          raise CliOptionError, 'errors.cli_options.output_directory_parent_not_writable'
         end
       elsif !parent.directory?
-        raise CliOptionError, I18n.t('errors.cli_options.output_directory_not_directory', output_dir: cli_options.output_directory)
+        raise CliOptionError, 'errors.cli_options.output_directory_not_directory'
       end
     end
 
@@ -136,9 +136,9 @@ module Hiptest
       if cli_options.actionwords_diff?
         actionwords_signature_file = Pathname.new(cli_options.output_directory).join("actionwords_signature.yaml")
         if actionwords_signature_file.directory?
-          raise CliOptionError, I18n.t('errors.cli_options.actionwords_signature_directory', path: actionwords_signature_file.realpath)
+          raise CliOptionError, 'errors.cli_options.actionwords_signature_directory'
         elsif !actionwords_signature_file.exist?
-          raise CliOptionError, I18n.t('errors.cli_options.missing_actionwords_signature_file', directory_path: File.expand_path(cli_options.output_directory))
+          raise CliOptionError, 'errors.cli_options.missing_actionwords_signature_file'
         end
       end
     end
@@ -148,16 +148,16 @@ module Hiptest
         xml_path = clean_path(cli_options.xml_file)
 
         if !File.readable?(xml_path)
-          raise CliOptionError, I18n.t('errors.cli_options.unreadable_xml_file', path: cli_options.xml_file)
+          raise CliOptionError, 'errors.cli_options.unreadable_xml_file'
         elsif !File.file?(xml_path)
-          raise CliOptionError, I18n.t('errors.cli_options.irregular_xml_file', path: cli_options.xml_file)
+          raise CliOptionError, 'errors.cli_options.irregular_xml_file'
         end
       end
     end
 
     def check_test_run_id
       if present?(cli_options.test_run_id) && !numeric?(cli_options.test_run_id)
-        raise CliOptionError, I18n.t('errors.cli_options.invalid_test_run_id', test_run_id: cli_options.test_run_id)
+        raise CliOptionError, 'errors.cli_options.invalid_test_run_id'
       end
     end
 
@@ -167,7 +167,7 @@ module Hiptest
 
        value.split(',').each do |val|
         next if numeric?(val.strip)
-        raise CliOptionError, I18n.t('errors.cli_options.invalid_numeric_value_list', option: option_name, incorrect_value: val.strip.inspect)
+        raise CliOptionError, 'errors.cli_options.invalid_numeric_value_list'
        end
     end
 
@@ -177,7 +177,7 @@ module Hiptest
 
       value.split(',').each do |val|
         next if tag_compatible?(val.strip)
-        raise CliOptionError, I18n.t('errors.cli_options.invalid_tag_value_list', option: option_name, incorrect_value: val.strip.inspect)
+        raise CliOptionError, 'errors.cli_options.invalid_tag_value_list'
       end
     end
 
@@ -187,7 +187,7 @@ module Hiptest
 
       value.split(',').each do |val|
         next if meta_compatible?(val.strip)
-        raise CliOptionError, I18n.t('errors.cli_options.invalid_meta', incorrect_value: val.strip.inspect)
+        raise CliOptionError, 'errors.cli_options.invalid_meta'
       end
     end
 
@@ -216,7 +216,7 @@ module Hiptest
 
     def check_build_options
       if present?(cli_options.build_id) && present?(cli_options.build_name)
-        raise CliOptionError, I18n.t('errors.cli_options.multiple_build_options')
+        raise CliOptionError, 'errors.cli_options.multiple_build_options'
       end
     end
 

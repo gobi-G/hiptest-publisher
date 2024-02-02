@@ -18,24 +18,24 @@ require 'hiptest-publisher/utils'
 
 # Ensure ruby version >= 2.7
 if RubyVersion < '2.7.0'
-  STDERR.puts(I18n.t('ruby_version.required_version', version: '2.7.0'))
-  STDERR.puts(I18n.t('ruby_version.current_version', engine: RUBY_ENGINE, version: RUBY_VERSION))
-  STDERR.puts(I18n.t('ruby_version.use_more_recent'))
+  STDERR.puts("Ruby 2.7.0 or higher is required.")
+  STDERR.puts("Using #{RUBY_ENGINE} #{RUBY_VERSION}.")
+  STDERR.puts("Please use a more recent version of Ruby.")
 
   if RubyVersion.is? 2.6
-    STDERR.puts(I18n.('ruby_version.support_ended', version: '2.6.0', year: '2022', month: '03', day: '31'))
+    STDERR.puts('Support for Ruby 2.6.0 ended on 2022-03-31')
   elsif RubyVersion.is? 2.5
-    STDERR.puts(I18n.('ruby_version.support_ended', version: '2.5.0', year: '2021', month: '03', day: '31'))
+    STDERR.puts('Support for Ruby 2.5.0 ended on 2021-03-31')
   elsif RubyVersion.is? 2.4
-    STDERR.puts(I18n.('ruby_version.support_ended', version: '2.4.0', year: '2020', month: '03', day: '31'))
+    STDERR.puts('Support for Ruby 2.4.0 ended on 2020-03-31')
   end
   exit 1
 end
 
 if RubyVersion < '3.0'
-  STDERR.puts(I18n.t('ruby_version.current_version', engine: RUBY_ENGINE, version: RUBY_VERSION))
-  STDERR.puts(I18n.t('ruby_version.deprecation_warning', version: '2.7'))
-  STDERR.puts(I18n.t('ruby_version.support_ended', version: '2.7', year: '2023', month: '03', day: '31'))
+  STDERR.puts("Using #{RUBY_ENGINE} #{RUBY_VERSION}.")
+  STDERR.puts("Warning: Ruby 2.7 is deprecated and will not be supported in future versions.")
+  STDERR.puts("Support for Ruby 2.7 ended on 2023-03-31")
 end
 
 require 'hiptest-publisher'

@@ -180,7 +180,7 @@ class CliOptions < OpenStruct
       end
       marshal_load(modified_options.marshal_dump)
       if reporter
-        reporter.show_options(delta, I18n.t("help.options.nomalized_options"))
+        reporter.show_options(delta, "help.options.nomalized_options")
       end
       return delta
     end
@@ -222,64 +222,64 @@ class OptionsParser
 
   def self.all_options
     [
-      Option.new('t', 'token=TOKEN', nil, String, I18n.t('options.token'), :token),
-      Option.new('l', 'language=LANG', 'ruby', String, I18n.t('options.language'), :language),
-      Option.new('f', 'framework=FRAMEWORK', '', String, I18n.t('options.framework'), :framework),
-      Option.new('o', 'output-directory=PATH', '.', String, I18n.t('options.output_directory'), :output_directory),
-      Option.new(nil, 'filename-pattern=PATTERN', nil, String, I18n.t('options.filename_pattern'), :filename_pattern),
-      Option.new('c', 'config-file=PATH', nil, String, I18n.t('options.config'), :config),
-      Option.new(nil, 'overriden-templates=PATH', '', String, I18n.t('options.overriden_templates'), :overriden_templates),
-      Option.new(nil, 'overriden-language-configs=PATH', '', String, I18n.t('options.overriden_language_configs'), :overriden_language_configs),
-      Option.new(nil, 'test-run-id=ID', '', String, I18n.t('options.test_run_id'), :test_run_id),
-      Option.new(nil, 'test-run-name=NAME', '', String, I18n.t('options.test_run_name'), :test_run_name),
-      Option.new(nil, 'only=CATEGORIES', nil, String, I18n.t('options.only'), :only),
-      Option.new(nil, 'without=CATEGORIES', nil, String, I18n.t('options.without'), :without),
-      Option.new('x', 'xml-file=PROJECT_XML', nil, String, I18n.t('options.xml_file'), :xml_file),
-      Option.new(nil, 'cache-dir=PATH', self.default_cache_directory, String, I18n.t('options.cache_dir'), :cache_dir),
-      Option.new(nil, 'cache-duration=DURATION', 60, Integer, I18n.t('options.cache_duration'), :cache_duration),
-      Option.new(nil, 'tests-only', false, nil, I18n.t('options.tests_only'), :tests_only),
-      Option.new(nil, 'actionwords-only', false, nil, I18n.t('options.actionwords_only'), :actionwords_only),
-      Option.new(nil, 'actionwords-signature', false, nil, I18n.t('options.actionwords_signature'), :actionwords_signature),
-      Option.new(nil, 'show-actionwords-diff', false, nil, I18n.t('options.actionwords_diff'), :actionwords_diff),
-      Option.new(nil, 'show-actionwords-diff-as-json', false, nil, I18n.t('options.actionwords_diff_json'), :actionwords_diff_json),
-      Option.new(nil, 'show-actionwords-deleted', false, nil, I18n.t('options.aw_deleted'), :aw_deleted),
-      Option.new(nil, 'show-actionwords-created', false, nil, I18n.t('options.aw_created'), :aw_created),
-      Option.new(nil, 'show-actionwords-renamed', false, nil, I18n.t('options.aw_renamed'), :aw_renamed),
-      Option.new(nil, 'show-actionwords-signature-changed', false, nil, I18n.t('options.aw_signature_changed'), :aw_signature_changed),
-      Option.new(nil, 'show-actionwords-definition-changed', false, nil, I18n.t('options.aw_definition_changed'), :aw_definition_changed),
-      Option.new(nil, 'library-name=LIBRARY_NAME', nil, String, I18n.t('options.library_name'), :library_name),
-      Option.new(nil, 'with-folders', false, nil, I18n.t('options.with_folders'), :with_folders),
-      Option.new(nil, 'empty-folders', false, nil, I18n.t('options.empty_folders'), :empty_folders),
-      Option.new(nil, 'split-scenarios', false, nil, I18n.t('options.split_scenarios'), :split_scenarios),
-      Option.new(nil, 'leafless-export', false, nil, I18n.t('options.leafless_export'), :leafless_export),
-      Option.new('s', 'site=SITE', 'https://studio.cucumber.io', String, I18n.t('options.site'), :site),
-      Option.new(nil, 'http-proxy=PROXY_URL', nil, String, I18n.t('options.http_proxy'), :http_proxy),
-      Option.new('p', 'push=FILE.TAP', '', String, I18n.t('options.push'), :push),
-      Option.new(nil, 'global-failure-on-missing-reports', false, nil, I18n.t('options.global_failure_on_missing_reports'), :global_failure_on_missing_reports),
-      Option.new(nil, 'push-format=tap', 'tap', String, I18n.t('options.push_format'), :push_format),
-      Option.new(nil, 'execution-environment=NAME', '', String, I18n.t('options.execution_environment'), :execution_environment),
-      Option.new(nil, 'build-id=ID', '', String, I18n.t('options.build_id'), :build_id),
-      Option.new(nil, 'build-name=NAME', '', String, I18n.t('options.build_name'), :build_name),
-      Option.new(nil, 'sort=[id,order,alpha]', 'order', String, I18n.t('options.sort'), :sort),
-      Option.new(nil, '[no-]uids', false, nil, I18n.t('options.uids'), :uids),
-      Option.new(nil, '[no-]parent-folder-tags', true, nil, I18n.t('options.parent_folder_tags'), :parent_folder_tags),
-      Option.new(nil, 'parameter-delimiter=DELIMITER', '"', EmptiableString, I18n.t('options.parameter_delimiter'), :parameter_delimiter),
-      Option.new(nil, 'with-dataset-names', false, nil, I18n.t('options.with_dataset_names'), :with_dataset_names),
-      Option.new(nil, 'keep-filenames', false, nil, I18n.t('options.keep_filenames'), :keep_filenames),
-      Option.new(nil, 'keep-foldernames', false, nil, I18n.t('options.keep_foldernames'), :keep_foldernames),
-      Option.new(nil, 'filter-on-scenario-ids=IDS', '', String, I18n.t('options.filter_on_scenario_ids'), :filter_on_scenario_ids),
-      Option.new(nil, 'filter-on-folder-ids=IDS', '', String, I18n.t('options.filter_on_folder_ids'), :filter_on_folder_ids),
-      Option.new(nil, 'filter-on-scenario-name=NAME', '', String, I18n.t('options.filter_on_scenario_name'), :filter_on_scenario_name),
-      Option.new(nil, 'filter-on-folder-name=NAME', '', String, I18n.t('options.filter_on_folder_name'), :filter_on_folder_name),
-      Option.new(nil, 'filter-on-tags=TAGS', '', String, I18n.t('options.filter_on_tags'), :filter_on_tags),
-      Option.new(nil, 'filter-on-status=STATUS', '', String, I18n.t('options.filter_on_status'), :filter_on_status),
-      Option.new(nil, 'not-recursive', false, nil, I18n.t('options.not_recursive'), :not_recursive),
-      Option.new(nil, 'meta=META', '', String, I18n.t('options.meta'), :meta),
-      Option.new(nil, 'check-version', false, nil, I18n.t('options.check_version'), :check_version),
-      Option.new(nil, 'force', false, nil, I18n.t('options.force_overwrite'), :force_overwrite),
-      Option.new(nil, '[no-]color', nil, nil, I18n.t('options.color'), :color),
-      Option.new('v', 'verbose', false, nil, I18n.t('options.verbose'), :verbose),
-      Option.new(nil, 'indentation=INDENTATION', nil, EmptiableString, I18n.t('options.indentation'), :indent)
+      Option.new('t', 'token=TOKEN', nil, String, 'options.token', :token),
+      Option.new('l', 'language=LANG', 'ruby', String, 'options.language', :language),
+      Option.new('f', 'framework=FRAMEWORK', '', String, 'options.framework', :framework),
+      Option.new('o', 'output-directory=PATH', '.', String, 'options.output_directory', :output_directory),
+      Option.new(nil, 'filename-pattern=PATTERN', nil, String, 'options.filename_pattern', :filename_pattern),
+      Option.new('c', 'config-file=PATH', nil, String, 'options.config', :config),
+      Option.new(nil, 'overriden-templates=PATH', '', String, 'options.overriden_templates', :overriden_templates),
+      Option.new(nil, 'overriden-language-configs=PATH', '', String, 'options.overriden_language_configs', :overriden_language_configs),
+      Option.new(nil, 'test-run-id=ID', '', String, 'options.test_run_id', :test_run_id),
+      Option.new(nil, 'test-run-name=NAME', '', String, 'options.test_run_name', :test_run_name),
+      Option.new(nil, 'only=CATEGORIES', nil, String, 'options.only', :only),
+      Option.new(nil, 'without=CATEGORIES', nil, String, 'options.without', :without),
+      Option.new('x', 'xml-file=PROJECT_XML', nil, String, 'options.xml_file', :xml_file),
+      Option.new(nil, 'cache-dir=PATH', self.default_cache_directory, String, 'options.cache_dir', :cache_dir),
+      Option.new(nil, 'cache-duration=DURATION', 60, Integer, 'options.cache_duration', :cache_duration),
+      Option.new(nil, 'tests-only', false, nil, 'options.tests_only', :tests_only),
+      Option.new(nil, 'actionwords-only', false, nil, 'options.actionwords_only', :actionwords_only),
+      Option.new(nil, 'actionwords-signature', false, nil, 'options.actionwords_signature', :actionwords_signature),
+      Option.new(nil, 'show-actionwords-diff', false, nil, 'options.actionwords_diff', :actionwords_diff),
+      Option.new(nil, 'show-actionwords-diff-as-json', false, nil, 'options.actionwords_diff_json', :actionwords_diff_json),
+      Option.new(nil, 'show-actionwords-deleted', false, nil, 'options.aw_deleted', :aw_deleted),
+      Option.new(nil, 'show-actionwords-created', false, nil, 'options.aw_created', :aw_created),
+      Option.new(nil, 'show-actionwords-renamed', false, nil, 'options.aw_renamed', :aw_renamed),
+      Option.new(nil, 'show-actionwords-signature-changed', false, nil, 'options.aw_signature_changed', :aw_signature_changed),
+      Option.new(nil, 'show-actionwords-definition-changed', false, nil, 'options.aw_definition_changed', :aw_definition_changed),
+      Option.new(nil, 'library-name=LIBRARY_NAME', nil, String, 'options.library_name', :library_name),
+      Option.new(nil, 'with-folders', false, nil, 'options.with_folders', :with_folders),
+      Option.new(nil, 'empty-folders', false, nil, 'options.empty_folders', :empty_folders),
+      Option.new(nil, 'split-scenarios', false, nil, 'options.split_scenarios', :split_scenarios),
+      Option.new(nil, 'leafless-export', false, nil, 'options.leafless_export', :leafless_export),
+      Option.new('s', 'site=SITE', 'https://studio.cucumber.io', String, 'options.site', :site),
+      Option.new(nil, 'http-proxy=PROXY_URL', nil, String, 'options.http_proxy', :http_proxy),
+      Option.new('p', 'push=FILE.TAP', '', String, 'options.push', :push),
+      Option.new(nil, 'global-failure-on-missing-reports', false, nil, 'options.global_failure_on_missing_reports', :global_failure_on_missing_reports),
+      Option.new(nil, 'push-format=tap', 'tap', String, 'options.push_format', :push_format),
+      Option.new(nil, 'execution-environment=NAME', '', String, 'options.execution_environment', :execution_environment),
+      Option.new(nil, 'build-id=ID', '', String, 'options.build_id', :build_id),
+      Option.new(nil, 'build-name=NAME', '', String, 'options.build_name', :build_name),
+      Option.new(nil, 'sort=[id,order,alpha]', 'order', String, 'options.sort', :sort),
+      Option.new(nil, '[no-]uids', false, nil, 'options.uids', :uids),
+      Option.new(nil, '[no-]parent-folder-tags', true, nil, 'options.parent_folder_tags', :parent_folder_tags),
+      Option.new(nil, 'parameter-delimiter=DELIMITER', '"', EmptiableString, 'options.parameter_delimiter', :parameter_delimiter),
+      Option.new(nil, 'with-dataset-names', false, nil, 'options.with_dataset_names', :with_dataset_names),
+      Option.new(nil, 'keep-filenames', false, nil, 'options.keep_filenames', :keep_filenames),
+      Option.new(nil, 'keep-foldernames', false, nil, 'options.keep_foldernames', :keep_foldernames),
+      Option.new(nil, 'filter-on-scenario-ids=IDS', '', String, 'options.filter_on_scenario_ids', :filter_on_scenario_ids),
+      Option.new(nil, 'filter-on-folder-ids=IDS', '', String, 'options.filter_on_folder_ids', :filter_on_folder_ids),
+      Option.new(nil, 'filter-on-scenario-name=NAME', '', String, 'options.filter_on_scenario_name', :filter_on_scenario_name),
+      Option.new(nil, 'filter-on-folder-name=NAME', '', String, 'options.filter_on_folder_name', :filter_on_folder_name),
+      Option.new(nil, 'filter-on-tags=TAGS', '', String, 'options.filter_on_tags', :filter_on_tags),
+      Option.new(nil, 'filter-on-status=STATUS', '', String, 'options.filter_on_status', :filter_on_status),
+      Option.new(nil, 'not-recursive', false, nil, 'options.not_recursive', :not_recursive),
+      Option.new(nil, 'meta=META', '', String, 'options.meta', :meta),
+      Option.new(nil, 'check-version', false, nil, 'options.check_version', :check_version),
+      Option.new(nil, 'force', false, nil, 'options.force_overwrite', :force_overwrite),
+      Option.new(nil, '[no-]color', nil, nil, 'options.color', :color),
+      Option.new('v', 'verbose', false, nil, 'options.verbose', :verbose),
+      Option.new(nil, 'indentation=INDENTATION', nil, EmptiableString, 'options.indentation', :indent)
     ]
   end
 
@@ -297,18 +297,18 @@ class OptionsParser
     options = CliOptions.new
     opt_parser = OptionParser.new do |opts|
       opts.version = hiptest_publisher_version if hiptest_publisher_version
-      opts.banner = I18n.t('help.header')
-      opts.separator I18n.t("help.description")
+      opts.banner = 'help.header'
+      opts.separator "help.description"
       opts.accept(EmptiableString, /.*/m) { |s,*| s }
 
       all_options.each {|o| o.register(opts, options)}
 
-      opts.on("-H", "--languages-help", I18n.t('options.languages_help')) do
+      opts.on("-H", "--languages-help", 'options.languages_help') do
         self.show_languages
         exit
       end
 
-      opts.on_tail("-h", "--help", I18n.t('options.help')) do
+      opts.on_tail("-h", "--help", 'options.help') do
         puts opts
         exit
       end
@@ -332,11 +332,11 @@ class OptionsParser
   end
 
   def self.show_languages
-    puts I18n.t('help.languages.supported_languages')
+    puts 'help.languages.supported_languages'
     languages.each do |language, frameworks|
       puts "#{language}:"
       if frameworks.empty?
-        puts I18n.t('help.languages.no_framework_available', language: make_language_option(language, ''))
+        puts 'help.languages.no_framework_available'
       else
         frameworks.each_with_index do |fw, index|
           if index == 0
@@ -447,7 +447,7 @@ class TemplateFinder
     unless @template_path_by_name.has_key?(template_name)
       @template_path_by_name[template_name] = get_template_by_name(template_name) || get_template_by_name(@fallback_template)
     end
-    @template_path_by_name[template_name] or raise ArgumentError.new(I18n.t('errors.template_not_found', template_name: template_name, dirs: dirs))
+    @template_path_by_name[template_name] or raise ArgumentError.new('errors.template_not_found')
   end
 
   def register_partials
@@ -660,7 +660,7 @@ class LanguageGroupConfig
     elsif self[:node_name] == "folders"
       :folders
     else
-      raise I18n.t('errors.invalid_node', name: self[:node_name], group_name: self[:group_name])
+      raise 'errors.invalid_node'
     end
   end
 
@@ -719,9 +719,9 @@ class LanguageConfigParser
 
     if !File.file?(config_path)
       if cli_options.framework.to_s.empty?
-        message = I18n.t('errors.invalid_config_file_no_framework', hiptest_publisher_path: hiptest_publisher_path, language: cli_options.language.inspect)
+        message = 'errors.invalid_config_file_no_framework'
       else
-        message = I18n.t('errors.invalid_config_file', hiptest_publisher_path: hiptest_publisher_path, language: cli_options.language.inspect, framework: cli_options.framework.inspect)
+        message = 'errors.invalid_config_file'
       end
       raise ArgumentError.new(message)
     end

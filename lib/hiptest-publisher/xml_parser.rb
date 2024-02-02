@@ -381,7 +381,7 @@ module Hiptest
       end
       self.send("build_#{node.name}", node)
     rescue => error
-      @reporter.dump_error(error, I18n.t('build_data.error', node: node.to_s))
+      @reporter.dump_error(error, 'build_data.error')
       nil
     end
 

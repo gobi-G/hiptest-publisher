@@ -149,7 +149,7 @@ module Hiptest
     def fetch_project_export
       response = send_get_request(url)
       if response.code_type == Net::HTTPNotFound
-        raise ClientError, I18n.t('errors.project_not_found')
+        raise ClientError, 'errors.project_not_found'
       end
 
       response.body
@@ -208,7 +208,7 @@ module Hiptest
         if cli_options.test_run_id?
           cli_options.test_run_id
         else
-          raise ClientError, I18n.t('errors.test_run_list_unavailable')
+          raise ClientError, 'errors.test_run_list_unavailable'
         end
       else
         matching_test_run = available_test_runs.find { |test_run| test_run[key] == searched_value }
@@ -221,9 +221,9 @@ module Hiptest
 
     def no_matching_test_runs_error_message
       if available_test_runs.empty?
-        I18n.t('errors.no_test_runs')
+        'errors.no_test_runs'
       else
-        I18n.t('errors.no_matching_test_run', test_runs: columnize_test_runs(available_test_runs))
+        'errors.no_matching_test_run'
       end
     end
 

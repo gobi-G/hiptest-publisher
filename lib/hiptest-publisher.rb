@@ -18,6 +18,9 @@ require 'hiptest-publisher/string'
 require 'hiptest-publisher/utils'
 require 'hiptest-publisher/version_checker'
 require 'hiptest-publisher/xml_parser'
+require 'i18n'
+
+
 
 module Hiptest
   class Publisher
@@ -91,12 +94,12 @@ module Hiptest
         raise
       end
     rescue => err
-      reporter.show_failure(I18n.t("errors.default"))
+      reporter.show_failure("errors.default")
       reporter.dump_error(err)
     end
 
     def get_project(xml)
-      reporter.with_status_message I18n.t('build_data.title') do
+      reporter.with_status_message 'build_data.title' do
         parser = Hiptest::XMLParser.new(xml, reporter)
         return parser.build_project
       end
@@ -114,10 +117,10 @@ module Hiptest
       return true if @cli_options.force_overwrite
 
       if $stdout.tty?
-        answer = reporter.ask(I18n.t('overwrite.ask_confirmation', path: path))
+        answer = reporter.ask("Do you want to overwrite the file at #{path}? (y/yes)")
         return ['y', 'yes'].include?(answer)
       else
-        reporter.warning_message(I18n.t('overwrite.warning_message', path: path))
+        reporter.warning_message("File at #{path} already exists!")
         return false
       end
     end
@@ -154,14 +157,14 @@ module Hiptest
 
       write_to_file(
         "#{@cli_options.output_directory}/actionwords_signature.yaml",
-        I18n.t('actionwords_diff.exporting_title'),
+        'actionwords_diff.exporting_title',
         ask_overwrite: true
       ) { Hiptest::SignatureExporter.export_actionwords(@project).to_yaml }
     end
 
     def compute_actionwords_diff
       old = nil
-      reporter.with_status_message I18n.t('actionwords_diff.loading_previous_definition') do
+      reporter.with_status_message('Loading previous definition...') do
         old = YAML.load_file("#{@cli_options.output_directory}/actionwords_signature.yaml")
       end
 
@@ -197,16 +200,16 @@ module Hiptest
     def print_categories
       language_config = LanguageConfigParser.new(@cli_options)
       group_names = language_config.group_names
-      puts I18n.t('help.categories.title', language: @cli_options.language)
+      puts 'help.categories.title'
       group_names.each do |group_name|
         puts "  - #{group_name}"
       end
-      puts I18n.t('help.categories.usage_example', language: @cli_options.language, first: group_names.first, second: group_names[1])
+      puts 'help.categories.usage_example'
     end
 
     def post_results
       response = nil
-      reporter.with_status_message I18n.t('push.posting_results', file: @cli_options.push, site: @cli_options.site) do
+      reporter.with_status_message('push.posting_results') do
         response = @client.push_results
       end
       if valid_hiptest_api_response?(response)
@@ -228,23 +231,23 @@ module Hiptest
       reported_tests = json.has_key?('test_import') ? json['test_import'] : []
       passed_count = reported_tests.size
 
-      reporter.with_status_message I18n.t('push.tests_imported_summary', count: passed_count) do
-        if @cli_options.verbose
-          reported_tests.each do |imported_test|
-            puts I18n.t('push.test_imported', name: imported_test['name'])
-          end
+      reporter.with_status_message("Tests imported summary: #{passed_count} tests imported.") do
+      if @cli_options.verbose
+        reported_tests.each do |imported_test|
+          puts "Test imported: #{imported_test['name']}"
         end
       end
+    end
 
       display_empty_push_help if passed_count == 0
     end
 
     def report_hiptest_api_error(response)
-      reporter.failure_message(I18n.t('errors.api_error', code: response.code))
+      reporter.failure_message("'errors.api_error' with code: #{response.code}")
       if response.code == "422" && response.body.start_with?("Unknown format")
         STDERR.print response.body.chomp + "\n"
       elsif response.code == "404"
-        STDERR.print I18n.t('errors.project_not_found')
+        STDERR.print 'errors.project_not_found'
       end
     end
 
@@ -252,10 +255,10 @@ module Hiptest
       command = @cli_options.command_line_used(exclude: [:push, :push_format, :execution_environment])
       enhanced_command = "#{command} --without=actionwords"
       if @cli_options.test_run_id.nil? || @cli_options.test_run_id.empty?
-        enhanced_command += " --test-run-id=<#{I18n.t('push.test_run_id')}>"
+        enhanced_command += " --test-run-id=<#{'push.test_run_id'}>"
       end
 
-      puts I18n.t('push.empty_results', enhanced_command: enhanced_command)
+      puts 'push.empty_results'
     end
   end
 end

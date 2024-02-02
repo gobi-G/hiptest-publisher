@@ -22,17 +22,17 @@ module Hiptest
       current = hiptest_publisher_version
 
       if latest == current
-        puts I18n.t('check_version.up_to_date', current: current)
+        puts 'check_version.up_to_date'
       else
-        puts I18n.t('check_version.outdated', current: current, latest: latest)
+        puts 'check_version.outdated'
       end
     end
 
     def get_latest_version
-      reporter.with_status_message I18n.t('check_version.title') do
+      reporter.with_status_message 'check_version.title' do
         latest_gem = Gem.latest_version_for('hiptest-publisher')
 
-        raise RuntimeError, I18n.t('check_version.error') if latest_gem.nil?
+        raise RuntimeError, 'check_version.error' if latest_gem.nil?
 
         latest = latest_gem.version
       end

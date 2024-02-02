@@ -52,7 +52,7 @@ module Hiptest
     def export_as_json
       @file_writer.write_to_file(
         "#{@cli_options.output_directory}/actionwords-diff.json",
-        I18n.t('actionwords_diff.exporting_diff_title')) {
+        'actionwords_diff.exporting_diff_title') {
         JSON.pretty_generate(as_api)
       }
     end
@@ -108,32 +108,32 @@ module Hiptest
       command_line = @cli_options.command_line_used(exclude: [:actionwords_diff])
 
       unless @diff[:deleted].nil?
-        puts I18n.t('actionwords_diff.summary.deleted', count: @diff[:deleted].length, command_line: command_line, list: displayable_list(@diff[:deleted]))
+        puts 'actionwords_diff.summary.deleted'
         puts ""
       end
 
       unless @diff[:created].nil?
-        puts I18n.t('actionwords_diff.summary.created', count: @diff[:created].length, command_line: command_line, list: displayable_list(@diff[:created]))
+        puts 'actionwords_diff.summary.created'
         puts ""
       end
 
       unless @diff[:renamed].nil?
-        puts I18n.t('actionwords_diff.summary.renamed', count: @diff[:renamed].length, command_line: command_line, list: displayable_list(@diff[:renamed]))
+        puts 'actionwords_diff.summary.renamed'
         puts ""
       end
 
       unless @diff[:signature_changed].nil?
-        puts I18n.t('actionwords_diff.summary.signature_changed', count: @diff[:signature_changed].length, command_line: command_line, list: displayable_list(@diff[:signature_changed]))
+        puts 'actionwords_diff.summary.signature_changed'
         puts ""
       end
 
       unless @diff[:definition_changed].nil?
-        puts I18n.t('actionwords_diff.summary.definition_changed', count: @diff[:definition_changed].length, command_line: command_line, list: displayable_list(@diff[:definition_changed]))
+        puts 'actionwords_diff.summary.definition_changed'
         puts ""
       end
 
       if @diff.empty?
-        puts I18n.t('actionwords_diff.summary.empty')
+        puts 'actionwords_diff.summary.empty'
         puts ""
       end
     end
