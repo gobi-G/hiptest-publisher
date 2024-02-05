@@ -41,7 +41,7 @@ module Hiptest
       return nil if cached_filename.nil?
 
       full_path = File.join(@cache_dir, cached_filename)
-      @reporter.show_verbose_message(I18n.t(:using_cache, full_path: full_path))
+      @reporter.show_verbose_message("#{:using_cache}")
       File.read(full_path)
     end
 

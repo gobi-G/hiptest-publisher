@@ -145,7 +145,7 @@ module Hiptest
             node_rendering_context.path,
             node_rendering_context.node,
             node_rendering_context,
-            I18n.t(:exporting_file, name: node_rendering_context.description),
+            "node_rendering_context.description",
             ask_overwrite: ask_overwrite
           )
         end
@@ -182,7 +182,7 @@ module Hiptest
 
     def analyze_project_data
       return if @project_data_analyzed
-      reporter.with_status_message I18n.t(:analyzing_data) do
+      reporter.with_status_message("#{:analyzing_data}") do
         @language_config = LanguageConfigParser.new(@cli_options)
         Hiptest::NodeModifiers.add_all(@project, @cli_options.sort)
       end

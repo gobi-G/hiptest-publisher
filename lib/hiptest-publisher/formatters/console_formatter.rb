@@ -32,7 +32,7 @@ class ConsoleFormatter
 
   def show_options(options, message = nil)
     return unless verbose
-    message ||= I18n.t(:verbose_header, version: hiptest_publisher_version)
+    message ||= "I18n.t(:verbose_header, version: hiptest_publisher_version)"
     puts colorize(message, :yellow)
     options.each { |k, v| puts " - #{k}: #{v.inspect}" }
   end

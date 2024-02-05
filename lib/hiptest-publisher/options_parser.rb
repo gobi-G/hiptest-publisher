@@ -69,7 +69,7 @@ class Option
     if default == nil || default == ""
       @help
     else
-      "#{@help} (#{I18n.t(:default)}: #{@default})"
+      "#{@help}"
     end
   end
 
@@ -340,7 +340,7 @@ class OptionsParser
       else
         frameworks.each_with_index do |fw, index|
           if index == 0
-            puts " - #{fw} [#{I18n.t(:default)}] #{make_language_option(language, '')}"
+            puts " - #{fw} #{make_language_option(language, '')}"
           else
             puts " - #{fw} #{make_language_option(language, fw)}"
           end
@@ -721,6 +721,7 @@ class LanguageConfigParser
       if cli_options.framework.to_s.empty?
         message = 'errors.invalid_config_file_no_framework'
       else
+        puts "config_path: #{config_path}"
         message = 'errors.invalid_config_file'
       end
       raise ArgumentError.new(message)

@@ -202,13 +202,7 @@ module Hiptest
         if present?(cli_options.only)
           if language_config_parser.filtered_group_names != cli_options.groups_to_keep
             unknown_categories = cli_options.groups_to_keep - language_config_parser.group_names
-            raise CliOptionError, I18n.t(
-              'errors.cli_options.invalid_category',
-              count: unknown_categories.length,
-              invalid_categories: formatted_categories(unknown_categories),
-              available_categories: formatted_categories(language_config_parser.group_names),
-              language: cli_options.language_framework
-            )
+            raise CliOptionError, 'errors.cli_options.unknown_categories'
           end
         end
       end
@@ -255,7 +249,7 @@ module Hiptest
       if formatted_categories.length == 1
         formatted_categories.first
       else
-        I18n.t(:readable_list, first_items: formatted_categories[0...-1].join(", "), last_item: formatted_categories.last)
+        'I18n.t(:readable_list, first_items: formatted_categories[0...-1].join(", "), last_item: formatted_categories.last)'
       end
     end
 

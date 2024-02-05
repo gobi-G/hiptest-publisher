@@ -95,12 +95,12 @@ module Hiptest
       cached = export_cache.cache_for(url)
 
       unless cached.nil?
-        @reporter.with_status_message I18n.t(:using_cached_data) do
+        @reporter.with_status_message "#{:using_cached_data}" do
           return cached
         end
       end
 
-      content = @reporter.with_status_message I18n.t(:fetching_data) do
+      content = @reporter.with_status_message "#{:fetching_data}" do
         break fetch_project_export if use_synchronous_fetch?
 
         begin
@@ -289,7 +289,7 @@ module Hiptest
           proxy_address, proxy_port, proxy_user, proxy_pass,
           use_ssl: use_ssl,
           verify_mode: OpenSSL::SSL::VERIFY_NONE) do |http|
-        @reporter.show_verbose_message(I18n.t(:request_sent, uri: request.uri))
+        @reporter.show_verbose_message("#{:request_sent}")
         response = http.request(request)
 
         raise RedirectionError.new("Got redirected", response['location']) if response.is_a?(Net::HTTPRedirection)
